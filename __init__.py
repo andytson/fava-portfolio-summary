@@ -243,7 +243,7 @@ class PortfolioSummaryInstance:  # pragma: no cover
         if self.ledger.end_date:
             query += f" AND date < {self.ledger.end_date}"
         start = time.time()
-        result = self.ledger.query_shell.execute_query(query)
+        result = self.ledger.query_shell.execute_query(g.filtered.entries, query)
         self.dividends_elapsed += time.time() - start
         dividends = ZERO
         if len(result[2])>0:
@@ -290,6 +290,7 @@ class PortfolioSummaryInstance:  # pragma: no cover
             total_currency_value = ZERO
 
             result = self.ledger.query_shell.execute_query(
+                g.filtered.entries,
                 "SELECT "
                 f"convert(cost(position),'{self.operating_currency}',cost_date) AS cost, "
                 f"convert(value(position) ,'{self.operating_currency}',today()) AS value "
