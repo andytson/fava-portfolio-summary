@@ -97,7 +97,7 @@ class PortfolioSummaryInstance:  # pragma: no cover
                     tree, key, pattern, internal, mwr, twr, "dividends" in cols)
             except Exception as _e:
                 # We re-raise to prevent masking the error.  Should this be a FavaAPIException?
-                raise Exception from _e
+                raise Exception(str(_e)) from _e
             all_mwr_internal |= internal
             portfolios.append((title, (self._get_types(cols), [portfolio])))
 
